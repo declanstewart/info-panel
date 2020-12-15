@@ -1,0 +1,20 @@
+body {
+  background-color: black;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: opacity 2s;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.bg-loading {
+  opacity: 0;
+}
