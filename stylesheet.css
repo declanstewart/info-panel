@@ -1,20 +1,58 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;;
+}
+
+
+/*BACKGROUND*/
 body {
-  background-color: black;
+    background-color: black;
 }
 
 .background {
-  width: 100vw;
-  height: 100vh;
-  padding: 0;
-  margin: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: opacity 2s;
-  background-repeat: no-repeat;
-  background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: opacity 2s;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .bg-loading {
-  opacity: 0;
+    opacity: 0;
+}
+
+/*Faded Header & Footer*/
+
+.fade {
+    height: 30vh;
+    width: 100vw;
+    position: fixed;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    top: 0;
+    background-image : linear-gradient(to bottom,
+        rgba(0,0,0, 0.9) 0%,
+        rgba(0,0,0, 0.7) 70%,
+        rgba(0,0,0, 0) 100%);
+}
+
+footer {
+    bottom: 0;
+    background-image : linear-gradient(to bottom,
+        rgba(0,0,0, 0) 0%,
+        rgba(0,0,0, 0.7) 30%,
+        rgba(0,0,0, 0.9) 100%);
 }
