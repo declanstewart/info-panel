@@ -7,6 +7,10 @@ html, body {
     box-sizing: border-box;;
 }
 
+html {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
 
 /*BACKGROUND*/
 body {
@@ -25,6 +29,7 @@ body {
     transition: opacity 2s;
     background-repeat: no-repeat;
     background-size: cover;
+    /*background-image: url(http://source.unsplash.com/random?nature);*/
 }
 .bg-loading {
     opacity: 0;
@@ -55,4 +60,35 @@ footer {
         rgba(0,0,0, 0) 0%,
         rgba(0,0,0, 0.7) 30%,
         rgba(0,0,0, 0.9) 100%);
+}
+
+/*Datetme (Clock & DateStamp)*/
+
+.datetime {
+    width: 50vw;
+}
+
+h2#date{
+    margin: 0 0 0 20px;
+}
+
+h1#time {
+    font-size: 5em;
+    margin: 0 0 0 20px;
+}
+
+h1 div {
+    float: left;
+}
+
+div#timeColon {
+    animation: TICK 1s infinite;
+}
+
+@keyframes TICK {
+  0%   { opacity: 0; }
+  49% { opacity: 0; }
+  50% { opacity: 1; }
+  99% { opacity: 1; }
+  100% { opacity: 0; }
 }
