@@ -81,7 +81,7 @@ h1#time, h2#date {
     overflow: auto;
     margin: 0;
     text-align: center;
-overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 h2#date{
@@ -121,4 +121,23 @@ li.forcast {
     float: left;
     list-style: none;
     margin: 0 2px;
+}
+
+div.time, div.icon, div.precipitation, div.temp {
+    text-align: center;
+}
+
+div.time{
+    font-size: 15pt;
+}
+
+div.icon {
+    overflow: hidden;
+    width: 100%;
+    height: 100px;
+}
+
+div.icon img {
+    width: 100%;
+    
 }
