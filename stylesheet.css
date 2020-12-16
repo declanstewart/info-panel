@@ -48,40 +48,54 @@ body {
 
 header {
     top: 0;
-    background-image : linear-gradient(to bottom,
+    /*background-image : linear-gradient(to bottom,
         rgba(0,0,0, 0.9) 0%,
         rgba(0,0,0, 0.7) 70%,
-        rgba(0,0,0, 0) 100%);
+        rgba(0,0,0, 0) 100%);*/
 }
 
 footer {
     bottom: 0;
-    background-image : linear-gradient(to bottom,
+    /*background-image : linear-gradient(to bottom,
         rgba(0,0,0, 0) 0%,
         rgba(0,0,0, 0.7) 30%,
-        rgba(0,0,0, 0.9) 100%);
+        rgba(0,0,0, 0.9) 100%);*/
 }
 
 /*Datetme (Clock & DateStamp)*/
 
 .datetime {
-    width: 50vw;
+    width: 40vw;
+}
+
+/*Black Element Background*/
+.datetime, .forcast{
+    background-color: rgba(0,0,0,0.5);
+    padding: 5px 5px 15px 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+h1#time, h2#date {
+    width: 100%;
+    overflow: auto;
+    margin: 0;
+    text-align: center;
+overflow-x: hidden;
 }
 
 h2#date{
-    margin: 0 0 0 20px;
+    font-weight: 100;
+    font-size: 15pt;
+
 }
 
 h1#time {
-    font-size: 5em;
-    margin: 0 0 0 20px;
+    font-size: 70pt;
+    font-weight: 100;
 }
 
-h1 div {
-    float: left;
-}
-
-div#timeColon {
+#timeColon {
     animation: TICK 1s infinite;
 }
 
@@ -91,4 +105,20 @@ div#timeColon {
   50% { opacity: 1; }
   99% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+/*Weather*/
+ul.weather {
+    width: 100vw;
+    overflow: auto;
+    padding: 5px;
+    margin: 0;
+}
+
+li.forcast {
+    height: calc(30vh - 10px);
+    width: calc(20% - 4px);
+    float: left;
+    list-style: none;
+    margin: 0 2px;
 }

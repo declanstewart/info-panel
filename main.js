@@ -1,5 +1,4 @@
 var backgroundImageData = [];
-
 //var backgroundImageService = 'pixabay';
 var backgroundImageService = 'unsplash';
 
@@ -11,11 +10,13 @@ function initialize() {
 
     if(backgroundImageService === "pixabay"){
         getPixabayBackgroundImageData();
-        updateBackgroundInterval = setInterval(updatePixabayBackground, 300000);
+        updateBackgroundInterval = setInterval(updatePixabayBackground, 3600000);
     }else{
-        updateBackgroundInterval = setInterval(updateUnsplashBackground, 300000);
+        updateBackgroundInterval = setInterval(updateUnsplashBackground, 3600000);
         updateUnsplashBackground();
     }
+
+    setDateTime();
 
 
 }
@@ -109,10 +110,38 @@ function reportError(txt,code){
 
 function setDateTime(){
 
-    var d = new Date();
-    var s = d.getSeconds();
-    var m = d.getMinutes();
-    var h = d.getHours();
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+    function ordinal(d) {
+        if (d > 3 && d < 21) return 'th';
+        switch (d % 10) {
+            case 1:  return "st";
+            case 2:  return "nd";
+            case 3:  return "rd";
+            default: return "th";
+        }
+    }
+
+    var timeHourElem = document.getElementById("timeHour");
+    var timeMinuteElem = document.getElementById("timeMinute");
+    var dateElem = document.getElementById("date");
+
+    var date = new Date();
+    var h = date.getHours();
+    var m = date.getMinutes();
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    var day = days[date.getDay()];
+    var dateNum = date.getDate();
+    var month = months[date.getMonth()];
+
+    var prettyDate = day + ' ' + dateNum + ordinal(dateNum) + ', ' + month;
+
+    timeHourElem.innerHTML = h;
+    timeMinuteElem.innerHTML = m;
+    dateElem.innerHTML = prettyDate;
+
+    setTimeout(setDateTime, 1000);
 
 }
