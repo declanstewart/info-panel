@@ -18,6 +18,7 @@ function initialize() {
 
     setDateTime();
 
+    getWeatherReport();
 
 }
 
@@ -144,4 +145,73 @@ function setDateTime(){
 
     setTimeout(setDateTime, 1000);
 
+}
+
+function getWeatherReport() {
+    console.log("run");
+
+    var target = document.getElementById("weather");
+
+    function createWeatherForcast(time,swc, pp, st){
+
+        timeraw = time.split(" ")[1].split(":");
+        timeOutput = timeraw[0]+':'+timeraw[1];
+
+        var liElem = document.createElement("LI");
+        liElem.classList.add("forcast");
+
+        var divTimeElem = document.createElement("DIV");
+        divTimeElem.classList.add("time");
+        divTimeElem.innerHTML = timeOutput;
+        liElem.appendChild(divTimeElem);
+
+        var divIconElem = document.createElement("DIV");
+        divIconElem.classList.add("icon");
+
+        var imgIconElem = document.createElement("IMG");
+        imgIconElem.src = "icons/weather/resize/"+swc+".svg";
+        divIconElem.appendChild(imgIconElem);
+        liElem.appendChild(divIconElem);
+
+        var divPrecipitationElem = document.createElement("DIV");
+        divPrecipitationElem.classList.add("precipitation");
+        divPrecipitationElem.innerHTML = Math.round(pp)+"%";
+        liElem.appendChild(divPrecipitationElem);
+
+        var divTempElem = document.createElement("DIV");
+        divTempElem.classList.add("temp");
+        divTempElem.innerHTML = Math.round(st)+"&deg;";
+        liElem.appendChild(divTempElem);
+
+        target.appendChild(liElem);
+    }
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            target.innerHTML = "";
+
+            var data = JSON.parse(this.responseText);
+
+            for (var i = 0; i < 12; i++) {
+
+                createWeatherForcast(data[i]['time'],data[i]['significantWeatherCode'], data[i]['precipitationRate'], data[i]['screenTemperature']);
+
+            }
+
+            setTimeout(getWeatherReport, 900000);
+
+        }
+
+        if (this.readyState == 4 && this.status >= 400) {
+            reportError("getWeatherReport", this.status);
+        }
+
+    };
+
+    xhttp.open("GET", 'php/get-metoffice-datahub-report.php', true);
+    xhttp.send();
 }

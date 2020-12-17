@@ -49,7 +49,7 @@ foreach ($data as $key => $row) {
     $temp['time'] = str_replace("T", " ", $temp['time']);
     $temp['time'] = $temp['time'] . ':00';
     $temp['significantWeatherCode'] = $row['significantWeatherCode'];
-    $temp['precipitationRate'] = $row['precipitationRate'];
+    $temp['precipitationRate'] = $row['probOfPrecipitation'];
     $temp['screenTemperature'] = $row['screenTemperature'];
 
     if(strtotime($temp['time']) >= strtotime(date("Y-m-d H:00:00"))){
