@@ -62,7 +62,7 @@ footer {
 }
 
 /*Black Element Background*/
-.datetime, .forcast{
+.datetime, .forcast, .calendar{
     background-color: rgba(0,0,0,0.5);
     padding: 5px 5px 15px 5px;
     margin: 5px;
@@ -140,8 +140,53 @@ div.precipitation, div.temp {
     margin-bottom: 4px;
 }
 
-li.swt1 {
-    background-image: url(icons/weather/0-e.svg);
-    background-position: 0px 15px;
-    background-repeat: no-repeat;
+
+/*Calendar*/
+section.calendar-holder {
+    position: fixed;
+    top: calc(80vh - 200px - 5px);
+    overflow: auto;
+    padding: 5px;
+    margin: 0;
+}
+
+div.calendar {
+    height: 200px;
+    float: left;
+    margin: 0 2px;
+    padding: 0;
+    overflow: hidden;
+}
+
+div.day {
+    width: calc((100% / 5) - 4px);
+}
+
+div.summary {
+    width: calc((100% / 5 * 2) - 4px);
+}
+
+div.calendar div.header {
+    /*background: rgba(0,0,0,0.5);*/
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+}
+
+div.calendar div.event {
+    width: 100%;
+    opacity: 50%;
+
+}
+
+div.calendar div.event::before{
+    
+}
+
+div.calendar div.declan {
+
+}
+
+div.calendar div.stacey {
+
 }

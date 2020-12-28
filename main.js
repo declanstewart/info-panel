@@ -8,13 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initialize() {
 
-    if(backgroundImageService === "pixabay"){
-        getPixabayBackgroundImageData();
-        updateBackgroundInterval = setInterval(updatePixabayBackground, 3600000);
-    }else{
-        updateBackgroundInterval = setInterval(updateUnsplashBackground, 3600000);
-        updateUnsplashBackground();
-    }
+    updateUnsplashBackground();
 
     setDateTime();
 
@@ -70,6 +64,7 @@ function updatePixabayBackground() {
     });
 }
 
+var unsplashSync = false;
 function updateUnsplashBackground() {
 
     var xhttp = new XMLHttpRequest();
@@ -91,6 +86,19 @@ function updateUnsplashBackground() {
               bgElement.style.backgroundImage = `url(${imageUrl})`;
               preloaderImg = null;
             });
+
+            var nextHour = new Date(Math.ceil(new Date().getTime()/3600000)*3600000);
+            var now = new Date();
+            var diff = nextHour - now;
+
+            if(unsplashSync === false){
+                setTimeout(getWeatherReport, diff);
+
+                unsplashSync = true;
+            }else{
+                setTimeout(getWeatherReport, 3600000);
+            }
+
         }
 
         if (this.readyState == 4 && this.status >= 400) {
@@ -147,8 +155,8 @@ function setDateTime(){
 
 }
 
+var weatherSync = false;
 function getWeatherReport() {
-    console.log("run");
 
     var target = document.getElementById("weather");
 
@@ -202,7 +210,17 @@ function getWeatherReport() {
 
             }
 
-            setTimeout(getWeatherReport, 900000);
+            var nextFifteen = new Date(Math.ceil(new Date().getTime()/900000)*900000);
+            var now = new Date();
+            var diff = nextFifteen - now;
+
+            if(weatherSync === false){
+                setTimeout(getWeatherReport, diff);
+
+                weatherSync = true;
+            }else{
+                setTimeout(getWeatherReport, 900000);
+            }
 
         }
 
