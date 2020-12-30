@@ -174,19 +174,55 @@ div.calendar div.header {
 }
 
 div.calendar div.event {
-    width: 100%;
-    opacity: 50%;
-
+    width: calc(100% - 4px);
+    background: rgba(0,0,0,0.5);
+    margin: 0 2px 2px 2px;
+    overflow: auto;
+    position: relative;
 }
 
 div.calendar div.event::before{
-    
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 8px;
+    line-height: 100%;
 }
 
-div.calendar div.declan {
+div.calendar div.declan::before{
+    background-color: #f7511e;
+    /*content: 'D';*/
+}
+
+div.calendar div.stacey::before {
+    background-color: #0236ff;
+    /*content: 'S';*/
+}
+
+div.calendar div.misc::before {
+    background-color: #1ba702;
+    /*content: 'M';*/
+}
+
+div.calendar div.event div.time, div.calendar div.event div.summary {
+    float: left;
 
 }
 
-div.calendar div.stacey {
+div.calendar div.event div.time {
+    width: 35%;
+    border-right: 1px rgba(172,172,172,0.5) solid;
+    padding: 0 2px 0 10px;
+}
 
+div.calendar div.event div.summary {
+    width: 65%;
+    height:38px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    padding: 0 2px;
 }

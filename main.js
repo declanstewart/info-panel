@@ -14,6 +14,8 @@ function initialize() {
 
     getWeatherReport();
 
+    getCalendarDetails();
+
 }
 
 function getPixabayBackgroundImageData() {
@@ -107,7 +109,7 @@ function updateUnsplashBackground() {
 
     };
 
-    xhttp.open("GET", 'php/get-background-image-data-unsplash.php', true);
+    xhttp.open("GET", 'php/get-background-image-data-unsplash.php?d=' + new Date().getTime(), true);
     xhttp.send();
 
 
@@ -117,20 +119,20 @@ function reportError(txt,code){
     console.log(txt + ' -- ' + code);
 }
 
-function setDateTime(){
+var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-    function ordinal(d) {
-        if (d > 3 && d < 21) return 'th';
-        switch (d % 10) {
-            case 1:  return "st";
-            case 2:  return "nd";
-            case 3:  return "rd";
-            default: return "th";
-        }
+function ordinal(d) {
+    if (d > 3 && d < 21) return 'th';
+    switch (d % 10) {
+        case 1:  return "st";
+        case 2:  return "nd";
+        case 3:  return "rd";
+        default: return "th";
     }
+}
+
+function setDateTime(){
 
     var timeHourElem = document.getElementById("timeHour");
     var timeMinuteElem = document.getElementById("timeMinute");
@@ -230,6 +232,187 @@ function getWeatherReport() {
 
     };
 
-    xhttp.open("GET", 'php/get-metoffice-datahub-report.php', true);
+    xhttp.open("GET", 'php/get-metoffice-datahub-report.php?d=' + new Date().getTime(), true);
+    xhttp.send();
+}
+
+var calendarSync = false;
+function getCalendarDetails() {
+
+    var targetCalToday = document.getElementById("cal-today");
+    var targetCalTomorrow = document.getElementById("cal-tomorrow");
+    var targetCalDayafter = document.getElementById("cal-dayafter");
+    var targetCalSummary = document.getElementById("cal-summary");
+
+    function createCalendarItems(targetElemID,summary,eventStart,eventEnd,name){
+
+        /*
+        todo
+        If target cal-summary time should include shorthand date stamp
+        */
+
+        function formatToTime(date){
+
+            var raw = date.split(" ")[1].split(":");
+            return raw[0] + ':' + raw[1];
+
+        }
+
+        var stacey = ['Stacey Events'];
+        var declan = ['Declan Events','Declan Rota'];
+        var nameClass = '';
+        if (name.indexOf(stacey) > -1){
+            nameClass = 'stacey';
+        }else if(name.indexOf(declan) > -1){
+            nameClass = 'declan';
+        }else{
+            nameClass = 'misc';
+        }
+
+        var eventElem = document.createElement("DIV");
+        eventElem.classList.add("event");
+        eventElem.classList.add(nameClass);
+
+        var timeElem = document.createElement("DIV");
+        timeElem.classList.add("time");
+        timeElem.innerHTML = formatToTime(eventStart)+"<br>"+formatToTime(eventEnd);
+
+        var summaryElem = document.createElement("DIV");
+        summaryElem.classList.add("summary");
+        summaryElem.innerHTML = summary;
+
+        eventElem.appendChild(timeElem);
+        eventElem.appendChild(summaryElem);
+        document.getElementById(targetElemID).appendChild(eventElem);
+
+    }
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            function createHeaders(eventDay,targetID){
+
+                var today = new Date();
+                var date = new Date(eventDay);
+                var day = days[date.getDay()];
+                var dateNum = date.getDate();
+                var month = months[date.getMonth()];
+
+                if (date.toDateString() === today.toDateString()) {
+                    // today
+                    prettyDate = 'Today';
+                }else{
+                    var prettyDate = day + ' ' + dateNum + ordinal(dateNum);
+
+                }
+                /*
+                <div class="header">
+                    Tue, 29th
+                </div>
+                */
+                var headerElem = document.createElement("DIV");
+                headerElem.classList.add("header");
+                headerElem.innerHTML = prettyDate;
+
+                document.getElementById(targetID).appendChild(headerElem);
+            }
+
+            targetCalToday.innerHTML = "";
+            targetCalTomorrow.innerHTML = "";
+            targetCalDayafter.innerHTML = "";
+            targetCalSummary.innerHTML = "";
+
+            var today = new Date();
+
+            var tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            var dayafter = new Date(today)
+            dayafter.setDate(dayafter.getDate() + 2);
+
+            var twoweek = new Date(today)
+            twoweek.setDate(twoweek.getDate() + 14);
+
+            createHeaders(today,'cal-today');
+            createHeaders(tomorrow,'cal-tomorrow');
+            createHeaders(dayafter,'cal-dayafter');
+
+            var data = JSON.parse(this.responseText);
+
+            for (var i = 0; i < data.length; i++) {
+
+                /*
+                check what day event is send to relevent targetElem
+                if more than 3 days check importance
+
+                example output
+                {
+                    "uid": "20210101_60o30dr268o30c1g60o30dr56k@google.com",
+                    "summary": "New Year's Day",
+                    "description": "",
+                    "dateStart": "2021-01-01 00:00:00",
+                    "dateEnd": "2021-01-02 00:00:00",
+                    "exdate": [],
+                    "recurrence": null,
+                    "location": null,
+                    "status": "CONFIRMED",
+                    "created": "2019-02-21 08:12:31",
+                    "updated": "2019-02-21 08:12:31",
+                    "importance": "minor",
+                    "name": "Public Holidays"
+                }
+                */
+
+                var startDate = new Date(data[i]['dateStart']);
+
+                var targetElemVar = '';
+
+                if (startDate.toDateString() === today.toDateString()) {
+                    // today
+                    targetElemVar = 'cal-today';
+                } else if (startDate.toDateString() === tomorrow.toDateString()){
+                    // tomorrow
+                    targetElemVar = 'cal-tomorrow';
+                } else if (startDate.toDateString() === dayafter.toDateString()){
+                    // day after tomorrow
+                    targetElemVar = 'cal-dayafter';
+                } else if (startDate.toDateString() < twoweek.toDateString()){
+                    // within 2 weeks (but not in first 3 days)
+                    targetElemVar = 'cal-summary';
+                    if(data[i]['importance'] === 'minor'){
+                        continue;
+                    }
+                }
+
+                if(targetElemVar !== ''){
+                    createCalendarItems(targetElemVar,data[i]['summary'],data[i]['dateStart'],data[i]['dateEnd'],data[i]['name']);
+                }
+
+            }
+
+            var nextHour = new Date(Math.ceil(new Date().getTime()/3600000)*3600000);
+            var now = new Date();
+            var diff = nextHour - now;
+
+            if(calendarSync === false){
+                setTimeout(getCalendarDetails, diff);
+
+                calendarSync = true;
+            }else{
+                setTimeout(getCalendarDetails, 3600000);
+            }
+
+        }
+
+        if (this.readyState == 4 && this.status >= 400) {
+            reportError("getCalendarDetails", this.status);
+        }
+
+    };
+
+    xhttp.open("GET", 'php/get-calendar-feeds.php?d=' + new Date().getTime(), true);
     xhttp.send();
 }
