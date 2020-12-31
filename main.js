@@ -251,11 +251,21 @@ function getCalendarDetails() {
         If target cal-summary time should include shorthand date stamp
         */
 
-        function formatToTime(date){
+        function formatToTime(date,target){
 
             var raw = date.split(" ")[1].split(":");
-            return raw[0] + ':' + raw[1];
 
+            if(target === 'cal-summary'){
+
+                var date2 = new Date(date);
+                var day = days[date2.getDay()];
+                var dateNum = date2.getDate();
+
+                return day + ' ' + dateNum + ordinal(dateNum) + ' | ' + raw[0] + ':' + raw[1];
+
+            }else{
+                return raw[0] + ':' + raw[1];
+            }
         }
 
         var stacey = ['Stacey Events'];
@@ -275,7 +285,12 @@ function getCalendarDetails() {
 
         var timeElem = document.createElement("DIV");
         timeElem.classList.add("time");
-        timeElem.innerHTML = formatToTime(eventStart)+"<br>"+formatToTime(eventEnd);
+        if(targetElemID === 'cal-summary'){
+            timeElem.innerHTML = formatToTime(eventStart,targetElemID)+" - "+formatToTime(eventEnd,'filler text');
+        }else{
+            timeElem.innerHTML = formatToTime(eventStart,targetElemID)+" - "+formatToTime(eventEnd,targetElemID);
+        }
+
 
         var summaryElem = document.createElement("DIV");
         summaryElem.classList.add("summary");

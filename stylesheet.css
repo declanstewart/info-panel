@@ -164,6 +164,7 @@ div.day {
 
 div.summary {
     width: calc((100% / 5 * 2) - 4px);
+    padding: 2px 0 0 0;
 }
 
 div.calendar div.header {
@@ -171,58 +172,65 @@ div.calendar div.header {
     width: 100%;
     padding: 5px;
     text-align: center;
+    text-decoration: underline;
 }
 
 div.calendar div.event {
     width: calc(100% - 4px);
-    background: rgba(0,0,0,0.5);
+
     margin: 0 2px 2px 2px;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
+    padding: 0 2px 0 10px;
 }
 
 div.calendar div.event::before{
     content: '';
     display: block;
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 8px;
+    top: -7px;
+    left: -7px;
+    height: 0px;
+    width: 0px;
     line-height: 100%;
+    border-radius: 100%;
+    border:solid 10px;
 }
 
 div.calendar div.declan::before{
     background-color: #f7511e;
+    border-color: #f7511e;
     /*content: 'D';*/
 }
 
 div.calendar div.stacey::before {
     background-color: #0236ff;
+    border-color: #0236ff;
     /*content: 'S';*/
 }
 
 div.calendar div.misc::before {
     background-color: #1ba702;
+    border-color: #1ba702;
     /*content: 'M';*/
 }
 
 div.calendar div.event div.time, div.calendar div.event div.summary {
-    float: left;
+    /*float: left;*/
 
 }
 
 div.calendar div.event div.time {
-    width: 35%;
-    border-right: 1px rgba(172,172,172,0.5) solid;
-    padding: 0 2px 0 10px;
+    width: 100%;
+    padding: 0 ;
 }
 
 div.calendar div.event div.summary {
-    width: 65%;
-    height:38px;
+    width: 100%;
+    max-height:38px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    padding: 0 2px;
+    padding: 0 ;
+
 }
