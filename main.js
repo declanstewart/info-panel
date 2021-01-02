@@ -270,10 +270,11 @@ function getCalendarDetails() {
 
         var stacey = ['Stacey Events'];
         var declan = ['Declan Events','Declan Rota'];
+
         var nameClass = '';
-        if (name.indexOf(stacey) > -1){
+        if (stacey.indexOf(name) > -1){
             nameClass = 'stacey';
-        }else if(name.indexOf(declan) > -1){
+        }else if(declan.indexOf(name) > -1){
             nameClass = 'declan';
         }else{
             nameClass = 'misc';
