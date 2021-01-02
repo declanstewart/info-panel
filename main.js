@@ -94,11 +94,11 @@ function updateUnsplashBackground() {
             var diff = nextHour - now;
 
             if(unsplashSync === false){
-                setTimeout(getWeatherReport, diff);
+                setTimeout(updateUnsplashBackground, diff);
 
                 unsplashSync = true;
             }else{
-                setTimeout(getWeatherReport, 3600000);
+                setTimeout(updateUnsplashBackground, 3600000);
             }
 
         }
