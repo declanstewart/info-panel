@@ -30,7 +30,8 @@ function get_calendar_events($url, $importance, $name){
     return $output;
 }
 
-$IP = $_SERVER["SERVER_ADDR"];
+//$IP = $_SERVER["SERVER_ADDR"];
+$IP = '127.0.0.1';
 
 $declan_url = 'https://p26-caldav.icloud.com/published/2/MTMxNTc5OTU2NjEzMTU3OTXP_8bZSbFihoIpCdQcunhOjNhDDzXa3-WuDc7cs1IA4L9VyVCArbd1Qfg5MRu1GT0aKeqmlQWIn4YzJhY8ge8';
 $declan_rota = 'https://feeds.rotacloud.com/calendar/cHdnqMZN2gcrJBr6yPgcbb1M/feed.ics';
@@ -53,7 +54,7 @@ foreach ($declan_rota as $value) {
     array_push($final_output, $value);
 }
 foreach ($stacey_events as $value) {
-    array_push($final_output, $value); 
+    array_push($final_output, $value);
 }
 foreach ($public_holidays_events as $value) {
     array_push($final_output, $value);
