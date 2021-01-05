@@ -53,7 +53,7 @@ foreach ($declan_rota as $value) {
     array_push($final_output, $value);
 }
 foreach ($stacey_events as $value) {
-    array_push($final_output, $value);
+    array_push($final_output, $value); 
 }
 foreach ($public_holidays_events as $value) {
     array_push($final_output, $value);
