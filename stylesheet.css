@@ -181,7 +181,7 @@ div.calendar div.event {
     margin: 0 2px 2px 2px;
     overflow: hidden;
     position: relative;
-    padding: 0 2px 0 10px;
+    padding: 0 2px;
 }
 
 div.calendar div.event::before{
@@ -222,7 +222,8 @@ div.calendar div.event div.time, div.calendar div.event div.summary {
 
 div.calendar div.event div.time {
     width: 100%;
-    padding: 0 ;
+    padding: 0 0 0 15px;
+    text-align: left;
 }
 
 div.calendar div.event div.summary {
