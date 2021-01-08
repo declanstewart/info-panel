@@ -246,11 +246,6 @@ function getCalendarDetails() {
 
     function createCalendarItems(targetElemID,summary,eventStart,eventEnd,name){
 
-        /*
-        todo
-        If target cal-summary time should include shorthand date stamp
-        */
-
         function formatToTime(date,target){
 
             var raw = date.split(" ")[1].split(":");
@@ -395,7 +390,7 @@ function getCalendarDetails() {
                 } else if (startDate.toDateString() === dayafter.toDateString()){
                     // day after tomorrow
                     targetElemVar = 'cal-dayafter';
-                } else if (startDate.toDateString() < twoweek.toDateString()){
+                } else if (startDate < twoweek){
                     // within 2 weeks (but not in first 3 days)
                     targetElemVar = 'cal-summary';
                     if(data[i]['importance'] === 'minor'){
