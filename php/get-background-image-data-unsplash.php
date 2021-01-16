@@ -20,7 +20,7 @@ function timestampToSeason($dateTime){
 
 $season = timestampToSeason(date("Y-m-d"));
 
-$url = UNSPLASH_API_URL.'/photos/random?orientation=portrait&query=nature,'.$season.'&client_id='.UNSPLASH_API_KEY;
+$url = UNSPLASH_API_URL.'/photos/random?orientation=portrait&query='.$season.'&client_id='.UNSPLASH_API_KEY;
 $response = file_get_contents($url);
 $response = json_encode($response);
 
