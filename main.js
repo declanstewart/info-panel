@@ -237,12 +237,77 @@ function getWeatherReport() {
 }
 
 var calendarSync = false;
+var data = [];
 function getCalendarDetails() {
 
     var targetCalToday = document.getElementById("cal-today");
     var targetCalTomorrow = document.getElementById("cal-tomorrow");
     var targetCalDayafter = document.getElementById("cal-dayafter");
     var targetCalSummary = document.getElementById("cal-summary");
+
+    function similarity(s1, s2) {
+        var longer = s1;
+        var shorter = s2;
+        if (s1.length < s2.length) {
+            longer = s2;
+            shorter = s1;
+        }
+        var longerLength = longer.length;
+        if (longerLength == 0) {
+            return 1.0;
+        }
+        return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+    }
+
+    function editDistance(s1, s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
+
+        var costs = new Array();
+        for (var i = 0; i <= s1.length; i++) {
+            var lastValue = i;
+            for (var j = 0; j <= s2.length; j++) {
+                if (i == 0)
+                costs[j] = j;
+                else {
+                    if (j > 0) {
+                        var newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                        newValue = Math.min(Math.min(newValue, lastValue),
+                        costs[j]) + 1;
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+            }
+            if (i > 0)
+            costs[s2.length] = lastValue;
+        }
+        return costs[s2.length];
+    }
+
+    function isDuplicate(summary, time){
+
+        var eventElems = document.getElementsByClassName('event');
+
+        for (var i = 0; i < eventElems.length; i++) {
+
+            var eventTime = eventElems[i].getAttribute('data-time');
+            var eventSummary = eventElems[i].getAttribute('data-summary')
+
+            if(eventTime === time){
+
+                if(similarity(eventSummary, summary) > 0.5){
+
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+
+    }
 
     function createCalendarItems(targetElemID,summary,eventStart,eventEnd,name){
 
@@ -294,6 +359,8 @@ function getCalendarDetails() {
 
         eventElem.appendChild(timeElem);
         eventElem.appendChild(summaryElem);
+        eventElem.setAttribute('data-time', eventStart);
+        eventElem.setAttribute('data-summary', summary);
         document.getElementById(targetElemID).appendChild(eventElem);
 
     }
@@ -351,7 +418,7 @@ function getCalendarDetails() {
             createHeaders(tomorrow,'cal-tomorrow');
             createHeaders(dayafter,'cal-dayafter');
 
-            var data = JSON.parse(this.responseText);
+            data = JSON.parse(this.responseText);
 
             for (var i = 0; i < data.length; i++) {
 
@@ -399,9 +466,13 @@ function getCalendarDetails() {
                 }
 
                 if(targetElemVar !== ''){
-                    createCalendarItems(targetElemVar,data[i]['summary'],data[i]['dateStart'],data[i]['dateEnd'],data[i]['name']);
-                }
 
+                    if(isDuplicate(data[i]['summary'],data[i]['dateStart']) === false){
+
+                        createCalendarItems(targetElemVar,data[i]['summary'],data[i]['dateStart'],data[i]['dateEnd'],data[i]['name']);
+
+                    }
+                }
             }
 
             var nextHour = new Date(Math.ceil(new Date().getTime()/3600000)*3600000);
