@@ -1,0 +1,10 @@
+@lxpanel --profile LXDE-pi
+@pxmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash
+
+@xset s off
+@xset - dpms
+@xset s noblank
+@chromium-browser --noerrordialogs --incognito --kiosk http://127.0.0.1/info-panel/
+
+
