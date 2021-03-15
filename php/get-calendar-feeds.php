@@ -22,7 +22,7 @@ function get_calendar_events($url, $importance, $name){
 
             if($name === 'Bin Days'){
                 $temp['dateStart'] = date("Y-m-d 00:00:00", strtotime($temp['dateStart']));
-                $temp['dateEnd'] = date("Y-m-d 23:59:59", strtotime($temp['dateEnd']));
+                $temp['dateEnd'] = date("Y-m-d 11:59:59", strtotime($temp['dateEnd']));
             }
 
             if(strtotime($temp['dateStart']) > time() || strtotime($temp['dateEnd']) > time()){
