@@ -2,6 +2,8 @@ var backgroundImageData = [];
 //var backgroundImageService = 'pixabay';
 var backgroundImageService = 'unsplash';
 
+var timerlength = 300;
+
 document.addEventListener('DOMContentLoaded', function() {
     initialize();
 }, false);
@@ -31,7 +33,7 @@ function getPixabayBackgroundImageData() {
         }
 
         if (this.readyState == 4 && this.status >= 400) {
-            reportError("getBackgroundImageData", this.status);
+            reportError("The 'Background Image' query failed to run.", this.status);
         }
 
     };
@@ -104,7 +106,7 @@ function updateUnsplashBackground() {
         }
 
         if (this.readyState == 4 && this.status >= 400) {
-            reportError("getBackgroundImageData", this.status);
+            reportError("The 'Background Image' query failed to run.", this.status);
         }
 
     };
@@ -116,8 +118,41 @@ function updateUnsplashBackground() {
 }
 
 function reportError(txt,code){
-    console.log(txt + ' -- ' + code);
+    //console.log(txt + ' -- ' + code);
+
+    var errorBox = document.getElementById("error");
+    errorBox.style.display = "block";
+
+    var errorBoxMessage = document.getElementById("message");
+
+    errorBoxMessage.innerHTML = txt;
+
+    timercount;
+    setInterval(timercount, 1000);
 }
+
+function timercount(){
+
+    var time = document.getElementById("countdown");
+
+    timerlength = timerlength - 1;
+
+    if (timerlength <= 0)
+    {
+        window.location.reload(true);
+        return;
+    }
+
+    var minutes = Math.floor(timerlength / 60);
+    var seconds = timerlength - (minutes * 60);
+
+    if(minutes === 0){minutes = ''}else if(minutes === 1){minutes = minutes + ' minute '}else{minutes = minutes + ' minutes '}
+    if(seconds === 0){seconds = ''}else if(seconds === 1){seconds = seconds + ' second '}else{seconds = seconds + ' seconds '}
+
+    time.innerHTML = minutes + seconds;
+
+}
+
 
 var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -227,7 +262,7 @@ function getWeatherReport() {
         }
 
         if (this.readyState == 4 && this.status >= 400) {
-            reportError("getWeatherReport", this.status);
+            reportError("The 'Weather Report' query failed to run.", this.status);
         }
 
     };
@@ -490,7 +525,7 @@ function getCalendarDetails() {
         }
 
         if (this.readyState == 4 && this.status >= 400) {
-            reportError("getCalendarDetails", this.status);
+            reportError("The 'Calendar' query failed to run.", this.status);
         }
 
     };
