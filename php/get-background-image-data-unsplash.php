@@ -18,9 +18,24 @@ function timestampToSeason($dateTime){
     return 'Fall';
 }
 
-$season = timestampToSeason(date("Y-m-d"));
+function randomiser(){
 
-$url = UNSPLASH_API_URL.'/photos/random?orientation=portrait&query='.$season.'&client_id='.UNSPLASH_API_KEY;
+    switch (rand(1,3)) {
+        case 1:
+            return timestampToSeason(date("Y-m-d"));
+            break;
+        case 2:
+            return 'flower';
+            break;
+        case 3:
+            return date("F");
+            break;
+    }
+}
+
+$keyword = randomiser();
+
+$url = UNSPLASH_API_URL.'/photos/random?orientation=portrait&query='.$keyword.'&client_id='.UNSPLASH_API_KEY;
 $response = file_get_contents($url);
 $response = json_encode($response);
 
