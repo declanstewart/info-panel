@@ -163,7 +163,6 @@ div.day {
 div.summary {
     width: calc((100% / 5 * 2) - 4px);
     padding: 2px 0 0 0;
-    font-family: Segoe UI Emoji;
 }
 
 div.calendar div.header {
