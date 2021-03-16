@@ -225,7 +225,7 @@ function getWeatherReport() {
 
         var divTempElem = document.createElement("DIV");
         divTempElem.classList.add("temp");
-        divTempElem.innerHTML = Math.round(st)+"&deg;";
+        divTempElem.innerHTML = Math.round(st)+"&#8451;";
         liElem.appendChild(divTempElem);
 
         target.appendChild(liElem);
