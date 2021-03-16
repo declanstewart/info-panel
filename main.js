@@ -389,7 +389,7 @@ function getCalendarDetails() {
         var endTemp = new Date(eventEnd);
         var startTemp = new Date(eventStart);
         if((+endTemp - +startTemp) === 86400000){
-            timeElem.innerHTML = 'All-Day';
+            timeElem.innerHTML = formatToTime(eventStart,targetElemID).split('|')[0] + ' | All-Day';
         }
 
         var summaryElem = document.createElement("DIV");
