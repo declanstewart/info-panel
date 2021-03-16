@@ -197,7 +197,7 @@ function getWeatherReport() {
 
     var target = document.getElementById("weather");
 
-    function createWeatherForcast(time,swc, pp, st){
+    function createWeatherForcast(time,swc, pp, st, wd, ws, wg){
 
         timeraw = time.split(" ")[1].split(":");
         timeOutput = timeraw[0]+':'+timeraw[1];
@@ -214,8 +214,8 @@ function getWeatherReport() {
         divIconElem.classList.add("icon");
 
         var imgIconElem = document.createElement("IMG");
-        imgIconElem.src = "icons/weather/resize/"+swc+".svg";
         divIconElem.appendChild(imgIconElem);
+        imgIconElem.src = "icons/weather/resize/"+swc+".svg";
         liElem.appendChild(divIconElem);
 
         var divPrecipitationElem = document.createElement("DIV");
@@ -228,6 +228,11 @@ function getWeatherReport() {
         divTempElem.innerHTML = Math.round(st)+"&#8451;";
         liElem.appendChild(divTempElem);
 
+        var divWindElem = document.createElement("DIV");
+        divWindElem.classList.add("wind");
+        divWindElem.innerHTML = wd + ' | ' + Math.round(ws) + 'mph | ' + Math.round(wg) + 'mph';
+        liElem.appendChild(divWindElem);
+//Wind Direction possible to be Null
         target.appendChild(liElem);
     }
 
@@ -243,7 +248,7 @@ function getWeatherReport() {
 
             for (var i = 0; i < 12; i++) {
 
-                createWeatherForcast(data[i]['time'],data[i]['significantWeatherCode'], data[i]['precipitationRate'], data[i]['screenTemperature']);
+                createWeatherForcast(data[i]['time'],data[i]['significantWeatherCode'], data[i]['precipitationRate'], data[i]['screenTemperature'], data[i]['windDirection'], data[i]['windSpeed'], data[i]['gustSpeed']);
 
             }
 

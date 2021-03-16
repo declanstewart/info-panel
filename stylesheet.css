@@ -115,7 +115,7 @@ li.forcast {
     overflow: hidden;
 }
 
-div.time, div.icon, div.precipitation, div.temp {
+div.time, div.icon, div.precipitation, div.temp, div.wind {
     text-align: center;
 }
 
@@ -136,8 +136,18 @@ div.icon img {
 
 div.precipitation, div.temp {
     margin-bottom: 4px;
+    float: left;
+    width: 50%;
 }
 
+div.temp {
+    border-left: solid 1px white;
+}
+
+div.wind {
+    border-top: solid 1px white;
+    clear: both;
+}
 
 /*Calendar*/
 section.calendar-holder {
