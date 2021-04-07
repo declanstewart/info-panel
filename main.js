@@ -197,7 +197,7 @@ function getWeatherReport() {
 
     var target = document.getElementById("weather");
 
-    function createWeatherForcast(time,swc, pp, st, wd, ws, wg){
+    function createWeatherForcast(time,swc, pp, st, wd, wdr, ws, wg){
 
         timeraw = time.split(" ")[1].split(":");
         timeOutput = timeraw[0]+':'+timeraw[1];
@@ -218,19 +218,22 @@ function getWeatherReport() {
         imgIconElem.src = "icons/weather/resize/"+swc+".svg";
         liElem.appendChild(divIconElem);
 
-        var divPrecipitationElem = document.createElement("DIV");
-        divPrecipitationElem.classList.add("precipitation");
-        divPrecipitationElem.innerHTML = Math.round(pp)+"%";
-        liElem.appendChild(divPrecipitationElem);
-
         var divTempElem = document.createElement("DIV");
         divTempElem.classList.add("temp");
         divTempElem.innerHTML = Math.round(st)+"&#8451;";
         liElem.appendChild(divTempElem);
 
+        var divPrecipitationElem = document.createElement("DIV");
+        divPrecipitationElem.classList.add("precipitation");
+        divPrecipitationElem.innerHTML = Math.round(pp)+"%";
+        liElem.appendChild(divPrecipitationElem);
+
         var divWindElem = document.createElement("DIV");
         divWindElem.classList.add("wind");
-        divWindElem.innerHTML = wd + ' | ' + Math.round(ws) + 'mph | ' + Math.round(wg) + 'mph';
+        divWindElem.innerHTML = '<span style="transform: rotate('+Math.round(wdr)+'deg);" class="windSpeed"></span>' + wd;
+        divWindElem.innerHTML += '<br>';
+        divWindElem.innerHTML += Math.round(ws) + ' (' + Math.round(wg) + ')';
+
         liElem.appendChild(divWindElem);
 //Wind Direction possible to be Null
         target.appendChild(liElem);
@@ -248,7 +251,7 @@ function getWeatherReport() {
 
             for (var i = 0; i < 12; i++) {
 
-                createWeatherForcast(data[i]['time'],data[i]['significantWeatherCode'], data[i]['precipitationRate'], data[i]['screenTemperature'], data[i]['windDirection'], data[i]['windSpeed'], data[i]['gustSpeed']);
+                createWeatherForcast(data[i]['time'],data[i]['significantWeatherCode'], data[i]['precipitationRate'], data[i]['screenTemperature'], data[i]['windDirection'], data[i]['windDirectionRaw'], data[i]['windSpeed'], data[i]['gustSpeed']);
 
             }
 

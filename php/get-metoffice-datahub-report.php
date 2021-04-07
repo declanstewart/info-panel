@@ -80,6 +80,7 @@ foreach ($data as $key => $row) {
     $temp['precipitationRate'] = $row['probOfPrecipitation'];
     $temp['screenTemperature'] = $row['screenTemperature'];
     $temp['windDirection'] = wind_cardinals($row['windDirectionFrom10m']);
+	$temp['windDirectionRaw'] = $row['windDirectionFrom10m'];
     $temp['windSpeed'] = $row['windSpeed10m'];
     $temp['gustSpeed'] = $row['windGustSpeed10m'];
 

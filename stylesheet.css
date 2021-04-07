@@ -135,18 +135,30 @@ div.icon img {
 }
 
 div.precipitation, div.temp {
-    margin-bottom: 4px;
+    padding-bottom: 4px;
     float: left;
     width: 50%;
 }
 
-div.temp {
+div.precipitation {
     border-left: solid 1px white;
 }
 
 div.wind {
     border-top: solid 1px white;
     clear: both;
+    padding-top: 3px;
+}
+
+span.windSpeed {
+    background: url("/info-panel/icons/weather/wind-n-arrow.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 14px;
+    display: inline-block;
+    height: 14px;
+    position: relative;
+    margin-right: 6px;
 }
 
 /*Calendar*/
