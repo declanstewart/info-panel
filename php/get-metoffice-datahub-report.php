@@ -5,8 +5,8 @@ require_once ( $includekeys );
 
 function wind_cardinals($deg) {
 	$cardinalDirections = array(
-		'N' => array(348.75, 360),
-		'N' => array(0, 11.25),
+		'N' => array(348.75, 361),
+		'N2' => array(0, 11.25),
 		'NNE' => array(11.25, 33.75),
 		'NE' => array(33.75, 56.25),
 		'ENE' => array(56.25, 78.75),
@@ -24,8 +24,8 @@ function wind_cardinals($deg) {
 		'NNW' => array(326.25, 348.75)
 	);
 	foreach ($cardinalDirections as $dir => $angles) {
-			if ($deg >= $angles[0] && $deg < $angles[1]) {
-				$cardinal = $dir;
+		if ($deg >= $angles[0] && $deg < $angles[1]) {
+			$cardinal = str_replace("2", "", $dir);
 			}
 		}
 		return $cardinal;
