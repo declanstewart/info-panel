@@ -39,6 +39,7 @@ function getPixabayBackgroundImageData() {
     };
 
     xhttp.open("GET", 'php/get-background-image-data-pixabay.php', true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 
 }
@@ -112,6 +113,7 @@ function updateUnsplashBackground() {
     };
 
     xhttp.open("GET", 'php/get-background-image-data-unsplash.php?d=' + new Date().getTime(), true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 
 
@@ -276,6 +278,7 @@ function getWeatherReport() {
     };
 
     xhttp.open("GET", 'php/get-metoffice-datahub-report.php?d=' + new Date().getTime(), true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 }
 
@@ -543,5 +546,6 @@ function getCalendarDetails() {
     };
 
     xhttp.open("GET", 'php/get-calendar-feeds.php?d=' + new Date().getTime(), true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 }
