@@ -277,7 +277,7 @@ function getWeatherReport() {
 
     };
 
-    xhttp.open("GET", 'php/get-metoffice-datahub-report.php?d=' + new Date().getTime(), true);
+    xhttp.open("GET", 'php/get-tomorrow-weather-report.php?d=' + new Date().getTime(), true);
     xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 }
