@@ -80,6 +80,11 @@ function updateUnsplashBackground() {
 
             var imageUrlRaw = JSON.parse(this.responseText);
             var imageUrl = imageUrlRaw['urls']['regular'];
+            
+            if(!imageUrl){
+                setTimeout(updateUnsplashBackground, 3600000);
+                return;
+            }
 
             let bgElement = document.querySelector(".background");
             bgElement.classList.add("bg-loading");
