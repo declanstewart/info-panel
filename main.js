@@ -39,6 +39,7 @@ function getPixabayBackgroundImageData() {
     };
 
     xhttp.open("GET", 'php/get-background-image-data-pixabay.php', true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 
 }
@@ -79,6 +80,11 @@ function updateUnsplashBackground() {
 
             var imageUrlRaw = JSON.parse(this.responseText);
             var imageUrl = imageUrlRaw['urls']['regular'];
+            
+            if(!imageUrl){
+                setTimeout(updateUnsplashBackground, 3600000);
+                return;
+            }
 
             let bgElement = document.querySelector(".background");
             bgElement.classList.add("bg-loading");
@@ -112,6 +118,7 @@ function updateUnsplashBackground() {
     };
 
     xhttp.open("GET", 'php/get-background-image-data-unsplash.php?d=' + new Date().getTime(), true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 
 
@@ -544,5 +551,6 @@ function getCalendarDetails() {
     };
 
     xhttp.open("GET", 'php/get-calendar-feeds.php?d=' + new Date().getTime(), true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
 }
