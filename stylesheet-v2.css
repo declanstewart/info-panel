@@ -1,0 +1,321 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;;
+}
+
+html {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+/*BACKGROUND*/
+body {
+    background-color: white;
+}
+
+.background {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: opacity 2s;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*background-image: url(http://source.unsplash.com/random?nature);*/
+    opacity: 0.7;
+}
+.bg-loading {
+    opacity: 0;
+}
+
+/*Faded Header & Footer*/
+
+.fade {
+    width: 100vw;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    height: calc(100vh - 370px);
+    top: 0;
+}
+
+footer {
+    bottom: 0;
+    width: 50vw !important;
+    position: fixed;
+    right: 0;
+    top: 200px;
+    height: 100vh;
+}
+
+/*Datetme (Clock & DateStamp)*/
+
+/*Black Element Background*/
+.datetime, .forcast, .calendar, .error{
+    padding: 5px 5px 15px 5px;
+    margin: 5px auto;
+}
+
+.datetime {
+    width: 50%;
+    float: left;
+    background-color: rgba(0,0,0,0.3);
+}
+
+
+
+h1#time, h2#date {
+    width: 100%;
+    overflow: auto;
+    margin: 0;
+    text-align: center;
+    overflow-x: hidden;
+    font-size: 3.5vw;
+}
+
+
+h1#time {
+    font-size: 18vw;
+    font-weight: 400;
+}
+
+#timeColon {
+    animation: TICK 1s infinite;
+}
+
+@keyframes TICK {
+  0%   { opacity: 0; }
+  49% { opacity: 0; }
+  50% { opacity: 1; }
+  99% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/*Weather*/
+ul.weather {
+    width: 50vw;
+    overflow: auto;
+    padding: 5px;
+    margin: 0;
+    color: white;
+    height: 100vh;
+}
+
+li.forcast {
+    height: 100px;
+    width: 70%;
+    float: right;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    clear: both;
+    margin-bottom: 5px;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0.3);
+}
+
+li.forcast:nth-of-type(n+7){
+    display: none;
+}
+
+li.forcast:first-of-type {
+    width: 90%;
+    height: 100px;
+    padding-bottom: 2px;
+}
+
+li.forcast:first-of-type div.time {
+    font-size: 20pt;
+    height: 100px;
+    line-height: 100px;
+    width: 40%
+}
+
+li.forcast:first-of-type div.icon {
+    width: 30%;
+    height: 200px;
+}
+
+li.forcast:first-of-type div.icon img {
+    width: 80px;
+    height: 80px;
+    margin: 5px auto;
+}
+
+li.forcast:first-of-type div.precipitation,
+li.forcast:first-of-type div.temp,
+li.forcast:first-of-type div.wind {
+    width: 30% !important;
+}
+
+div.time, div.icon, div.precipitation, div.temp, div.wind {
+    text-align: right;
+}
+
+footer div.time {
+    font-size: 12pt;
+    float: left;
+    height: 90px;
+    line-height: 90px;
+    width: 50%;
+    text-align: left;
+}
+
+div.icon {
+    overflow: hidden;
+    width: 20%;
+    float: left;
+    height: 90px;
+}
+
+div.icon img {
+    width: 34px;
+    height: 34px;
+    margin: 28px auto;
+}
+
+div.precipitation, div.temp {
+    padding-bottom: 4px;
+    float: right;
+    width: 30%;
+}
+
+div.wind {
+    padding-top: 3px;
+    float: right;
+    width: 30%;
+}
+
+span.windSpeed {
+    background: url("/info-panel/icons/weather/wind-n-arrow.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 14px;
+    display: inline-block;
+    height: 14px;
+    position: relative;
+    margin-right: 6px;
+}
+
+/*Calendar*/
+section.calendar-holder {
+    height: 200px;
+    overflow: auto;
+    padding: 5px;
+    margin: 0;
+    color:black;
+    bottom: 0;
+    position: fixed;
+}
+
+div.calendar {
+    height: 100%;
+    float: left;
+    margin: 0 2px;
+    padding: 0;
+    overflow: hidden;
+}
+
+div.day {
+    width: calc((100% / 5) - 4px);
+}
+
+div.summary {
+    width: calc((100% / 5 * 2) - 4px);
+    padding: 2px 0 0 0;
+}
+
+div.calendar.summary, div.day {
+    background-color: rgba(0,0,0,0.3);
+}
+
+div.calendar div.header {
+    /*background: rgba(0,0,0,0.5);*/
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+div.calendar div.event {
+    width: calc(100% - 4px);
+
+    margin: 0 2px 2px 2px;
+    overflow: hidden;
+    position: relative;
+    padding: 0 2px;
+}
+
+div.calendar div.event::before{
+    content: '';
+    display: block;
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    height: 0px;
+    width: 0px;
+    line-height: 100%;
+    border-radius: 100%;
+    border:solid 10px;
+}
+
+div.calendar div.declan::before{
+    background-color: #f7511e;
+    border-color: #f7511e;
+    /*content: 'D';*/
+}
+
+div.calendar div.stacey::before {
+    background-color: #0236ff;
+    border-color: #0236ff;
+    /*content: 'S';*/
+}
+
+div.calendar div.misc::before {
+    background-color: #1ba702;
+    border-color: #1ba702;
+    /*content: 'M';*/
+}
+
+div.calendar div.event div.time, div.calendar div.event div.summary {
+    /*float: left;*/
+
+}
+
+div.calendar div.event div.time {
+    width: 100%;
+    padding: 0 0 0 15px;
+    text-align: left;
+}
+
+div.calendar div.event div.summary {
+    width: 100%;
+    max-height:38px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    padding: 0 ;
+
+}
+
+/* Error */
+
+div.error {
+    position: fixed;
+    top: 0;
+    right: 0;
+    box-shadow: 0px 0px 15px 5px #FF0000;
+    width: 30vw;
+    height: 15vw;
+}
