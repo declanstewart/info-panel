@@ -63,7 +63,6 @@ $output = [];
 
 foreach ($returned_times as $key => $time) {
 
-
 	$temp = [];
     $temp['time'] = convert_to_user_date($time);
     $temp['significantWeatherCode'] = $response['hourly']['weather_code'][$key];
@@ -74,7 +73,8 @@ foreach ($returned_times as $key => $time) {
     $temp['windSpeed'] = $response['hourly']['wind_speed_10m'][$key];
     $temp['gustSpeed'] = $response['hourly']['wind_gusts_10m'][$key];
 
-    if(strtotime($temp['time']) >= strtotime(date("Y-m-d H:00:00"))){
+    if(strtotime($time) >= strtotime(date("Y-m-d H:00:00"))){
+
         array_push($output, $temp);
     }
 
@@ -82,29 +82,3 @@ foreach ($returned_times as $key => $time) {
 
 echo json_encode($output, JSON_PRETTY_PRINT);
 return;
-
-foreach ($returned_times as $key => $time) {
-
-    $forcast = $row['Rep'];
-
-    $temp = [];
-    $temp['time'] = $row['time'];
-    $temp['time'] = str_replace("Z", "", $temp['time']);
-    $temp['time'] = str_replace("T", " ", $temp['time']);
-    $temp['time'] = $temp['time'] . ':00';
-    $temp['significantWeatherCode'] = $row['significantWeatherCode'];
-    $temp['precipitationRate'] = $row['probOfPrecipitation'];
-    $temp['screenTemperature'] = $row['screenTemperature'];
-    $temp['windDirection'] = wind_cardinals($row['windDirectionFrom10m']);
-	$temp['windDirectionRaw'] = $row['windDirectionFrom10m'];
-    $temp['windSpeed'] = $row['windSpeed10m'];
-    $temp['gustSpeed'] = $row['windGustSpeed10m'];
-
-    if(strtotime($temp['time']) >= strtotime(date("Y-m-d H:00:00"))){
-        array_push($output, $temp);
-    }
-
-}
-
-header('Content-Type: application/json');
-echo json_encode($output, JSON_PRETTY_PRINT);
