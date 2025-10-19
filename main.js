@@ -348,7 +348,7 @@ function getCalendarDetails() {
 
             if(eventTime === time){
 
-                if(similarity(eventSummary, summary) > 0.5){
+                if(similarity(eventSummary, summary) > 0.8){
 
                     return true;
                 }
