@@ -68,7 +68,7 @@ footer {
 }
 
 .datetime {
-    width: 50%;
+    width: 35%;
     float: left;
     margin: 2px;
 }
@@ -87,12 +87,12 @@ h1#time, h2#date {
     margin: 0;
     text-align: center;
     overflow-x: hidden;
-    font-size: 3.5vw;
+    font-size: 2.5vw;
 }
 
 
 h1#time {
-    font-size: 18vw;
+    font-size: 12vw;
     font-weight: 100;
 }
 

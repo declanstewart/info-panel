@@ -1,6 +1,6 @@
 var backgroundImageData = [];
 //var backgroundImageService = 'pixabay';
-var backgroundImageService = 'unsplash';
+//var backgroundImageService = 'unsplash';
 
 var timerlength = 300;
 
@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initialize() {
 
-    updateUnsplashBackground();
+    //updateUnsplashBackground();
+    updateBackground();
 
     setDateTime();
 
@@ -41,6 +42,86 @@ function getPixabayBackgroundImageData() {
     xhttp.open("GET", 'php/get-background-image-data-pixabay.php', true);
     xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
     xhttp.send();
+
+}
+
+function updatePixabayBackground() {
+    if (backgroundImageData.hits.length === 0){//don't run if no images are found
+      return;
+    }
+
+    function random(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    var imageUrl = backgroundImageData.hits[random(1, 200)].largeImageURL;
+
+    let bgElement = document.querySelector(".background");
+    bgElement.classList.add("bg-loading");
+    let preloaderImg = document.createElement("img");
+    preloaderImg.src = imageUrl;
+
+    preloaderImg.addEventListener('load', (event) => {
+      bgElement.classList.remove("bg-loading");
+      bgElement.style.backgroundImage = `url(${imageUrl})`;
+      preloaderImg = null;
+    });
+}
+
+var unsplashSync = false;
+function updateBackground() {
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+
+            var imageUrlRaw = JSON.parse(this.responseText);
+            var imageUrl = imageUrlRaw['url'];
+
+            if(!imageUrl){
+                setTimeout(updateBackground, 3600000);
+                return;
+            }
+
+            let bgElement = document.querySelector(".background");
+            bgElement.classList.add("bg-loading");
+            let preloaderImg = document.createElement("img");
+            preloaderImg.src = imageUrl;
+
+            preloaderImg.addEventListener('load', (event) => {
+              bgElement.classList.remove("bg-loading");
+              bgElement.style.backgroundImage = `url(${imageUrl})`;
+              preloaderImg = null;
+            });
+
+            var nextHour = new Date(Math.ceil(new Date().getTime()/3600000)*3600000);
+            var now = new Date();
+            var diff = nextHour - now;
+
+            if(unsplashSync === false){
+                setTimeout(updateBackground, diff);
+
+                unsplashSync = true;
+            }else{
+                setTimeout(updateBackground, 3600000);
+            }
+
+        }
+
+        if (this.readyState == 4 && this.status >= 400) {
+            reportError("The 'Background Image' query failed to run.", this.status);
+        }
+
+    };
+
+    xhttp.open("GET", 'php/get-background-image.php?d=' + new Date().getTime(), true);
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, max-age=0");
+    xhttp.send();
+
 
 }
 
