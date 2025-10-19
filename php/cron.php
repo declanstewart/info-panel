@@ -47,7 +47,7 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
 }
 
 //if(in_array(date("i"),[00])){//every 15 minutes
-if(isset($_GET['run'])){
+//if(isset($_GET['run'])){
 
     $images = scandir("/var/www/html/images");
     $images = array_diff($images, array('.', '..'));
@@ -77,7 +77,7 @@ if(isset($_GET['run'])){
         }
     }
 
-}
+//}
 
 
 
