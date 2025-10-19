@@ -145,7 +145,7 @@ li.forcast:first-of-type {
 
 li.forcast:first-of-type div.time {
     font-size: 20pt;
-    width: 35%
+    width: 30%
 }
 
 li.forcast:first-of-type div.icon {
@@ -162,7 +162,7 @@ li.forcast:first-of-type div.icon img {
 li.forcast:first-of-type div.precipitation,
 li.forcast:first-of-type div.temp,
 li.forcast:first-of-type div.wind {
-    width: 30% !important;
+    width: 35% !important;
 }
 
 div.time, div.icon, div.precipitation, div.temp, div.wind {
@@ -174,7 +174,7 @@ footer div.time {
     float: left;
     height: 90px;
     line-height: 90px;
-    width: 35%;
+    width: 30%;
     text-align: left;
 }
 
@@ -194,13 +194,13 @@ div.icon img {
 div.precipitation, div.temp {
     padding-bottom: 4px;
     float: right;
-    width: 30%;
+    width: 35%;
 }
 
 div.wind {
     padding-top: 3px;
     float: right;
-    width: 30%;
+    width: 35%;
 }
 
 span.windSpeed {
