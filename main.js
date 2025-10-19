@@ -80,7 +80,7 @@ function updateUnsplashBackground() {
 
             var imageUrlRaw = JSON.parse(this.responseText);
             var imageUrl = imageUrlRaw['urls']['regular'];
-            
+
             if(!imageUrl){
                 setTimeout(updateUnsplashBackground, 3600000);
                 return;
@@ -204,7 +204,7 @@ function getWeatherReport() {
 
     var target = document.getElementById("weather");
 
-    function createWeatherForcast(time,swc, pp, st, wd, wdr, ws, wg){
+    function createWeatherForcast(time,icon, pp, st, wd, wdr, ws, wg){
 
         timeraw = time.split(" ")[1].split(":");
         timeOutput = timeraw[0]+':'+timeraw[1];
@@ -222,7 +222,7 @@ function getWeatherReport() {
 
         var imgIconElem = document.createElement("IMG");
         divIconElem.appendChild(imgIconElem);
-        imgIconElem.src = "icons/weather/resize/"+swc+".svg";
+        imgIconElem.src = "icons/weather/resize/"+icon;
         liElem.appendChild(divIconElem);
 
         var divTempElem = document.createElement("DIV");
@@ -258,7 +258,7 @@ function getWeatherReport() {
 
             for (var i = 0; i < 12; i++) {
 
-                createWeatherForcast(data[i]['time'],data[i]['significantWeatherCode'], data[i]['precipitationRate'], data[i]['screenTemperature'], data[i]['windDirection'], data[i]['windDirectionRaw'], data[i]['windSpeed'], data[i]['gustSpeed']);
+                createWeatherForcast(data[i]['time'],data[i]['icon'], data[i]['precipitationRate'], data[i]['screenTemperature'], data[i]['windDirection'], data[i]['windDirectionRaw'], data[i]['windSpeed'], data[i]['gustSpeed']);
 
             }
 
