@@ -64,7 +64,7 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
 
                 // 1. Define input and output paths
                 $input_dir = "/var/www/html/images/";
-                $output_dir = "/var/www/html/images/converted/"; // Use a dedicated folder if possible
+                $output_dir = "/var/www/html/images/"; 
 
                 // Get filename without extension (e.g., "myphoto")
                 $file_bits = pathinfo($image);
