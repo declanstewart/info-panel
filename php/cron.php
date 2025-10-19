@@ -62,6 +62,46 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
 
             if(in_array($file_type, ['heic']) && !in_array($file_bits[0].'.jpg',$images)){
 
+                // 1. Define input and output paths
+                $input_dir = "/var/www/html/images/";
+                $output_dir = "/var/www/html/images/converted/"; // Use a dedicated folder if possible
+
+                // Get filename without extension (e.g., "myphoto")
+                $file_bits = pathinfo($image);
+                $filename_only = $file_bits['filename'];
+
+                // Define absolute path for the output file
+                $output_file_path = $output_dir . $filename_only . '.jpg';
+
+                // --- Imagick Conversion Block ---
+
+                // Open the input file stream
+                $uploadedImage = fopen($input_dir . $image, 'rb');
+
+                if ($uploadedImage) {
+                    $image_to_convert = new Imagick();
+
+                    // Read the image data from the stream
+                    $image_to_convert->readImageFile($uploadedImage);
+
+                    // Set format for the conversion operation
+                    $image_to_convert->setFormat("jpeg");
+
+                    // **CRITICAL STEP:** Write the converted image to the absolute output path
+                    $image_to_convert->writeImage($output_file_path);
+
+                    // Clean up
+                    fclose($uploadedImage);
+                    $image_to_convert->clear();
+
+                    echo "Successfully converted and saved to: " . $output_file_path;
+                } else {
+                    // Handle error if the input file couldn't be opened
+                    echo "Error: Could not open the source HEIC file.";
+                }
+
+                /*
+
                 $uploadedImage = fopen("/var/www/html/images/".$image, 'rb');
 
                 $image_to_convert = new Imagick();
@@ -69,7 +109,7 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
                 $image_to_convert->setFormat("jpeg");
                 $image_to_convert->setFileName("/var/www/html/images/".$file_bits[0].'.jpg');
 
-                echo $image;
+                echo $image;*/
 
                 return;
 
