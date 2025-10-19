@@ -67,7 +67,7 @@ if(isset($_GET['run'])){
                 $image_to_convert = new Imagick();
                 $image_to_convert->readImageFile($uploadedImage);
                 $image_to_convert->setFormat("jpeg");
-                $image_to_convert->setFileName($file_bits[0].'.jpg');
+                $image_to_convert->setFileName("/var/www/html/images/".$file_bits[0].'.jpg');
 
                 echo $image;
 
