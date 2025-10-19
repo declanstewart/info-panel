@@ -46,6 +46,40 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
 
 }
 
+//if(in_array(date("i"),[00])){//every 15 minutes
+if(isset($_GET['run'])){
+
+    $images = scandir("/var/www/html/images");
+    $images = array_diff($images, array('.', '..'));
+
+    foreach ($images as $key => $image) {
+
+        $file_bits = explode(".",$image);
+
+        if(count($file_bits) > 1){
+
+            $file_type = strtolower($file_bits[1]);
+
+            if(in_array($file_type, ['heic']) && !in_array($file_bits[0].'.jpg',$images)){
+
+                $uploadedImage = fopen("/var/www/html/images/".$image, 'rb');
+
+                $image_to_convert = new Imagick();
+                $image_to_convert->readImageFile($uploadedImage);
+                $image_to_convert->setFormat("jpeg");
+                $image_to_convert->setFileName($file_bits[0].'.jpg');
+
+                echo $image;
+
+                return;
+
+            }
+        }
+    }
+
+}
+
+
 
 
 //echo json_encode(getWeatherData(),JSON_PRETTY_PRINT);
