@@ -46,8 +46,7 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
 
 }
 
-//if(in_array(date("i"),[00])){//every 15 minutes
-//if(isset($_GET['run'])){
+if(in_array(date("i"),[00])){//every hour
 
     $images = scandir("/var/www/html/images");
     $images = array_diff($images, array('.', '..'));
@@ -64,7 +63,7 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
 
                 // 1. Define input and output paths
                 $input_dir = "/var/www/html/images/";
-                $output_dir = "/var/www/html/images/"; 
+                $output_dir = "/var/www/html/images/";
 
                 // Get filename without extension (e.g., "myphoto")
                 $file_bits = pathinfo($image);
@@ -87,7 +86,7 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
                     // Set format for the conversion operation
                     $image_to_convert->setFormat("jpeg");
 
-                    // **CRITICAL STEP:** Write the converted image to the absolute output path
+                    // Write the converted image to the absolute output path
                     $image_to_convert->writeImage($output_file_path);
 
                     // Clean up
@@ -99,25 +98,10 @@ if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
                     // Handle error if the input file couldn't be opened
                     echo "Error: Could not open the source HEIC file.";
                 }
-
-                /*
-
-                $uploadedImage = fopen("/var/www/html/images/".$image, 'rb');
-
-                $image_to_convert = new Imagick();
-                $image_to_convert->readImageFile($uploadedImage);
-                $image_to_convert->setFormat("jpeg");
-                $image_to_convert->setFileName("/var/www/html/images/".$file_bits[0].'.jpg');
-
-                echo $image;*/
-
-                return;
-
             }
         }
     }
-
-//}
+}
 
 
 
