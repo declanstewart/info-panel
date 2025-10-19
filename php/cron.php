@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 date_default_timezone_set('UTC');
 
-//if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
+if(in_array(date("i"),[00,15,30,45])){//every 15 minutes
 
     $request = @file_get_contents("https://api.open-meteo.com/v1/forecast?latitude=51.2754&longitude=-2.7766&hourly=temperature_2m,precipitation_probability,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m&forecast_days=2&wind_speed_unit=mph");
 
@@ -44,7 +44,7 @@ date_default_timezone_set('UTC');
     //return;
 
 
-//}
+}
 
 echo date("i");
 
