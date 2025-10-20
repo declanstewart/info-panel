@@ -96,14 +96,15 @@ if(in_array(date("i"),[00])){//every hour
                         $image_to_convert->clear();
 
                         echo "Successfully converted and saved to: " . $output_file_path;
+
+                        //Delete the original HEIC file
+                        unlink($input_dir.$image);
+
                     } else {
                         // Handle error if the input file couldn't be opened
                         echo "Error: Could not open the source HEIC file.";
                     }
                 }
-            }else{
-
-                unlink($input_dir.$image);
             }
         }
     }
