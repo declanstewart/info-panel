@@ -15,9 +15,9 @@ function initialize() {
 
     setDateTime();
 
-    getWeatherReport();
-
     getCalendarDetails();
+
+    syncWeatherReport();
 
 }
 
@@ -104,7 +104,6 @@ function updateBackground() {
 
             if(unsplashSync === false){
                 setTimeout(updateBackground, diff);
-
                 unsplashSync = true;
             }else{
                 setTimeout(updateBackground, 3600000);
@@ -280,8 +279,35 @@ function setDateTime(){
 
 }
 
-var weatherSync = false;
+function syncWeatherReport(){
+
+    /*
+    * function runs one on page load
+    * first it generates the weather report
+    * then we work out the "gap" to the beginning of the next 15 minute (00,15,30,45)
+    * we then schedule a reoccuring task to happen every 15 minutes starting at the next 15 minute marker 
+    */
+
+    getWeatherReport();
+
+    var nextFifteen = new Date(Math.ceil(new Date().getTime()/900000)*900000);
+    var now = new Date();
+    var timeTillEventStart = nextFifteen - now;
+
+    console.log(timeTillEventStart / (60 * 1000));
+
+    setTimeout( function(){
+
+        getWeatherReport();
+        setInterval(getWeatherReport, (15 * 60 * 1000));
+    
+    },timeTillEventStart);
+
+}
+
 function getWeatherReport() {
+
+    console.log('Weather:'+ new Date());
 
     var target = document.getElementById("weather");
 
@@ -341,18 +367,6 @@ function getWeatherReport() {
 
                 createWeatherForcast(data[i]['time'],data[i]['icon'], data[i]['precipitationRate'], data[i]['screenTemperature'], data[i]['windDirection'], data[i]['windDirectionRaw'], data[i]['windSpeed'], data[i]['gustSpeed']);
 
-            }
-
-            var nextFifteen = new Date(Math.ceil(new Date().getTime()/900000)*900000);
-            var now = new Date();
-            var diff = nextFifteen - now;
-
-            if(weatherSync === false){
-                setTimeout(getWeatherReport, diff);
-
-                weatherSync = true;
-            }else{
-                setTimeout(getWeatherReport, 900000);
             }
 
         }
