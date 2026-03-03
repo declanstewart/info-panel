@@ -71,6 +71,31 @@ function updatePixabayBackground() {
 }
 
 var unsplashSync = false;
+
+function syncBackground(){
+
+    /*
+    * function runs one on page load
+    * first it runs the background image update
+    * then we work out the "gap" to the beginning of the next hour
+    * we then schedule a reoccuring task to happen every 60 minutes starting at the next 1hour marker
+    */
+
+    updateBackground();
+
+    var nextHour = new Date(Math.ceil(new Date().getTime()/3600000)*3600000);
+    var now = new Date();
+    var timeTillEventStart = nextHour - now;
+
+    setTimeout( function(){
+
+        updateBackground();
+        setInterval(updateBackground, (60 * 60 * 1000));
+    
+    },timeTillEventStart);
+
+}
+
 function updateBackground() {
 
     var xhttp = new XMLHttpRequest();
@@ -82,11 +107,6 @@ function updateBackground() {
             var imageUrlRaw = JSON.parse(this.responseText);
             var imageUrl = imageUrlRaw['url'];
 
-            if(!imageUrl){
-                setTimeout(updateBackground, 3600000);
-                return;
-            }
-
             let bgElement = document.querySelector(".background");
             bgElement.classList.add("bg-loading");
             let preloaderImg = document.createElement("img");
@@ -97,17 +117,6 @@ function updateBackground() {
               bgElement.style.backgroundImage = `url(${imageUrl})`;
               preloaderImg = null;
             });
-
-            var nextHour = new Date(Math.ceil(new Date().getTime()/3600000)*3600000);
-            var now = new Date();
-            var diff = nextHour - now;
-
-            if(unsplashSync === false){
-                setTimeout(updateBackground, diff);
-                unsplashSync = true;
-            }else{
-                setTimeout(updateBackground, 3600000);
-            }
 
         }
 
@@ -293,8 +302,6 @@ function syncWeatherReport(){
     var nextFifteen = new Date(Math.ceil(new Date().getTime()/900000)*900000);
     var now = new Date();
     var timeTillEventStart = nextFifteen - now;
-
-    console.log(timeTillEventStart / (60 * 1000));
 
     setTimeout( function(){
 
