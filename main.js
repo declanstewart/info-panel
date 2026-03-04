@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initialize() {
 
     //updateUnsplashBackground();
-    updateBackground();
+    syncBackground();
 
     setDateTime();
 
