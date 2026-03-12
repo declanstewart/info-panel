@@ -15,7 +15,7 @@ function initialize() {
 
     setDateTime();
 
-    getCalendarDetails();
+    syncCalendarDetails();
 
     syncWeatherReport();
 
@@ -389,7 +389,30 @@ function getWeatherReport() {
     xhttp.send();
 }
 
-var calendarSync = false;
+function syncCalendarDetails(){
+
+    /*
+    * function runs one on page load
+    * first it generates the weather report
+    * then we work out the "gap" to the beginning of the next 15 minute (00,15,30,45)
+    * we then schedule a reoccuring task to happen every 15 minutes starting at the next 15 minute marker 
+    */
+
+    getCalendarDetails();
+
+    var nextHour = new Date(Math.ceil(new Date().getTime()/(60 * 60 * 1000)) * 60 * 60 * 1000);
+    var now = new Date();
+    var timeTillEventStart = nextHour - now;
+
+    setTimeout( function(){
+
+        getCalendarDetails();
+        setInterval(getCalendarDetails, (15 * 60 * 1000));
+    
+    },timeTillEventStart);
+
+}
+
 var data = [];
 function getCalendarDetails() {
 
@@ -631,19 +654,6 @@ function getCalendarDetails() {
                     }
                 }
             }
-
-            var nextHour = new Date(Math.ceil(new Date().getTime()/3600000)*3600000);
-            var now = new Date();
-            var diff = nextHour - now;
-
-            if(calendarSync === false){
-                setTimeout(getCalendarDetails, diff);
-
-                calendarSync = true;
-            }else{
-                setTimeout(getCalendarDetails, 3600000);
-            }
-
         }
 
         if (this.readyState == 4 && this.status >= 400) {
